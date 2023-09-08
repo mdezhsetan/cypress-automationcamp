@@ -1,15 +1,15 @@
 ///<reference types = 'cypress' />
 
 describe("Session 3", () => {
-  //   it("Keyboard Actions --> Type", () => {
-  //     cy.get("https://google.com").type("learning cypress {enter}");
-  //   });
+  it("Keyboard Actions --> Type", () => {
+    cy.get("https://google.com").type("learning cypress {enter}");
+  });
 
-  //   it("Keyboard Actions --> using sequences", () => {
-  //     cy.get("https://google.com").type(
-  //       "learning cypress {backspace}{home}{del}"
-  //     );
-  //   });
+  it("Keyboard Actions --> using sequences", () => {
+    cy.get("https://google.com").type(
+      "learning cypress {backspace}{home}{del}"
+    );
+  });
 
   it("Keyboard Actions --> Key Combination", () => {
     cy.visit("https://google.com/");
@@ -35,7 +35,7 @@ describe("Session 3", () => {
     cy.get("input[name=q]").clear();
     cy.get("input[name=q]").type("I'm typing fast", { delay: 0 });
   });
-  it("Keyboard Actions > Repeat", function () {
+  it.only("Keyboard Actions > Repeat", function () {
     cy.visit("https://www.google.com/");
     cy.get("input[name=q]").type("Cypress ".repeat(6));
   });
@@ -100,5 +100,59 @@ describe("Session3 - Mouse Actions", function () {
       .trigger("mousedown", { which: 1 })
       .realMouseMove(300, 100)
       .realMouseUp();
+  });
+});
+
+describe("Session3 - Scroll", function () {
+  // topLeft, top, topRight, left, center, right, bottomLeft, bottom, and bottomRight
+  it("1-Scroll Page - To Position", function () {
+    cy.visit("https://www.imdb.com/chart/top/");
+    cy.scrollTo("bottom");
+  });
+  it("2-Scroll Page - By Coordination", function () {
+    cy.visit("https://www.imdb.com/chart/top/");
+    cy.scrollTo(0, 1300);
+  });
+  it("3-Scroll Page - By Pixel", function () {
+    cy.visit("https://www.imdb.com/chart/top/");
+    cy.scrollTo("0px", "3000px");
+  });
+  it("4-Scroll Page - By Percentage", function () {
+    cy.visit("https://www.imdb.com/chart/top/");
+    cy.scrollTo("0%", "60%");
+  });
+  it("5-Scroll Element Into View", function () {
+    cy.visit("https://www.imdb.com/chart/top/");
+    cy.get(":nth-child(245) > .titleColumn").scrollIntoView();
+  });
+  it("6-Scroll Element - To Position", function () {
+    cy.visit("https://datatables.net/examples/basic_init/scroll_xy.html");
+    cy.scrollTo("100%", "10%");
+    cy.get(".dataTables_scrollBody").scrollTo("right");
+  });
+  it("7-Scroll Element - By Coordination", function () {
+    cy.visit("https://datatables.net/examples/basic_init/scroll_xy.html");
+    cy.scrollTo("100%", "10%");
+    cy.get(".dataTables_scrollBody").scrollTo(300, 400);
+  });
+  it("8-Scroll Element - By Percentage", function () {
+    cy.visit("https://datatables.net/examples/basic_init/scroll_xy.html");
+    cy.scrollTo("100%", "10%");
+    cy.get(".dataTables_scrollBody").scrollTo("50%", "50%");
+  });
+  it("9-Scroll with Duration", function () {
+    cy.visit("https://datatables.net/examples/basic_init/scroll_xy.html");
+    cy.scrollTo("100%", "10%");
+    cy.get(".dataTables_scrollBody").scrollTo("center", { duration: "2000" });
+  });
+  it("10-Scroll with Line Easing", function () {
+    cy.visit("https://datatables.net/examples/basic_init/scroll_y.html");
+    cy.scrollTo("100%", "10%");
+    cy.wait(500);
+    // cy.get(".dataTables_scrollBody").scrollTo('center', {duration:500, easing: 'swing' })
+    cy.get(".dataTables_scrollBody").scrollTo("center", {
+      duration: 500,
+      easing: "linear",
+    });
   });
 });
